@@ -1,0 +1,18 @@
+Hello. I made a script using pynotify, looking like this:
+
+wm = pyinotify.WatchManager() # Watch Manager
+mask = pyinotify.IN_CREATE # watched events
+
+class EventHandler(pyinotify.ProcessEvent):
+def process_IN_CREATE(self, event):
+f = open(event.pathname, 'r');
+#do stuff
+f.close()
+
+handler = EventHandler()
+notifier = pyinotify.Notifier(wm, handler)
+wdd = wm.add_watch(watchedfolder, mask, rec=True)
+notifier.loop()
+
+and I cannot figure out how to daemonize it because whenever I do that I end up losing the event class, which means I am unable to work with the file, since I just can't get to event.pathname. Is there any way how to do it?
+ Basically I would just need to know how to pass event class into callback function when using the daemonisation.
